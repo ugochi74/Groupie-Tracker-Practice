@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"io"
 )
+// learning nerver ends
 func main() {
     res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
 	    if err != nil {
