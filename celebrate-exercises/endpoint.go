@@ -1,0 +1,186 @@
+package main
+
+
+import (
+	"fmt"
+	"net/http"
+	"encoding/json"
+)
+
+type Artist struct {
+	ID           int      `json:"id"`
+	Name         string   `json:"name"`
+	Members      []string `json:"members"`
+	CreationDate int      `json:"creationDate"`
+	FirstAlbum   string   `json:"firstAlbum"`
+	ConcertDates string   `json:"concertDates"`
+	Locations    string   `json:"locations"`
+	Relations    string   `json:"relations"`
+	Image        string   `json:"image"`
+}
+
+
+type Location struct {
+	ID        int      `json:"id"`
+	Locations []string `json:"locations"`
+}
+
+type Date struct {
+	ID    int      `json:"id"`
+	Dates []string `json:"dates"`
+}
+
+type Relation struct {
+	ID             int                 `json:"id"`
+	DatesLocations map[string][]string `json:"datesLocations"`
+}
+
+// These endpoints return an object whose "index" field
+// contains the actual slice.
+
+type LocationResponse struct {
+	Index []Location `json:"index"`
+}
+
+type DateResponse struct {
+	Index []Date `json:"index"`
+}
+
+type RelationResponse struct {
+	Index []Relation `json:"index"`
+}
+
+// --------------------
+// Package-level data
+// --------------------
+
+var (
+	artists   []Artist
+	locations []Location
+	dates     []Date
+	relations []Relation
+)
+
+// learning nerver ends
+func fetchArtists()  error {
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+	    if err != nil {
+		return err
+	
+		}
+		
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+
+	//var artists []Artist
+	err = decoder.Decode(&artists)
+	if err != nil {
+		return err
+
+   }
+   return  nil
+}
+
+
+func fetchLocations()  error {
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+	    if err != nil {
+		return err
+	
+		}
+		
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+
+	var locations []Location
+	err = decoder.Decode(&locations)
+	if err != nil {
+		return err
+
+   }
+   return  nil
+}
+
+
+func fetchRelations()  error {
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+	    if err != nil {
+		return err
+	
+		}
+		
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+
+	var relations []Relation
+	err = decoder.Decode(&relations)
+	if err != nil {
+		return err
+
+   }
+   return nil
+}
+
+
+func fetchDates() error {
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+	    if err != nil {
+		return err
+	
+		}
+		
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+
+	var dates []Date
+	err = decoder.Decode(&dates)
+	if err != nil {
+		return err
+
+   }
+   return  nil
+}
+
+
+
+func fetchAll() error {
+	if err := fetchArtists(); err != nil{
+	
+		return err
+	}
+
+ if  err := fetchLocations(); err != nil{
+	
+		return err
+ }
+
+	 if err := fetchRelations(); err != nil{
+		return err
+	}
+
+	 if err := fetchDates(); err != nil { 
+	
+		return err
+	
+}
+ return nil
+}
+
+	func main() {
+		 err := fetchAll()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
+
+	fmt.Println("artists", len(artists))
+	fmt.Println("locations:", len(locations))
+	fmt.Println("relations:", len(relations))
+	fmt.Println("dates:", len(dates))
+	fmt.Println()
+
+// for _, artist := range artists {
+// 	fmt.Println(artist.Name)
+	
+// }
+}
