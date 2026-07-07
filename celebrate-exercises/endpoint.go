@@ -183,6 +183,11 @@ func fetchAll() error {
 			fmt.Println("Error:", err)
 			return
 		}
+		 for _, artist := range artists {
+ 	fmt.Println(artist.Name)
+	fmt.Println(artist.Members)
+
+ }
 
 	fmt.Println("artists", len(artists))
 	fmt.Println("locations:", len(locations))
@@ -190,18 +195,15 @@ func fetchAll() error {
 	fmt.Println("dates:", len(dates))
 	fmt.Println()
 
-// for _, artist := range artists {
-// 	fmt.Println(artist.Name)
 
-// }
 
-// for _, location := range locations {
-//     fmt.Println("Artist ID:", location.ID)
+for _, location := range locations {
+    fmt.Println("Artist ID:", location.ID)
 
-//     for _, place := range locations {
-//         fmt.Println(place)
-//     }
+    for _, place := range location. Locations {
+        fmt.Println(place)
+    }
 
-//     fmt.Println()
-// }
+    fmt.Println()
+}
 	}
