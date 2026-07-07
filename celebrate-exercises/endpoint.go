@@ -70,6 +70,10 @@ func fetchArtists()  error {
 		}
 		
 	defer res.Body.Close()
+
+
+	//var response ArtistResponse
+
 	decoder := json.NewDecoder(res.Body)
 
 	//var artists []Artist
@@ -78,67 +82,74 @@ func fetchArtists()  error {
 		return err
 
    }
+   //artists = response.Index
    return  nil
 }
 
 
 func fetchLocations()  error {
-    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/locations")
 	    if err != nil {
 		return err
 	
 		}
 		
 	defer res.Body.Close()
+	var response LocationResponse
 	decoder := json.NewDecoder(res.Body)
 
-	var locations []Location
-	err = decoder.Decode(&locations)
+	//var locations []Location
+	err = decoder.Decode(&response)
 	if err != nil {
 		return err
 
    }
+   locations = response.Index
    return  nil
 }
 
 
 func fetchRelations()  error {
-    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/relation")
 	    if err != nil {
 		return err
 	
 		}
 		
 	defer res.Body.Close()
+	var response RelationResponse
+
 	decoder := json.NewDecoder(res.Body)
 
-	var relations []Relation
-	err = decoder.Decode(&relations)
+	err = decoder.Decode(&response)
 	if err != nil {
 		return err
 
    }
+   relations = response.Index
    return nil
 }
 
 
 func fetchDates() error {
-    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/artists")
+    res, err := http.Get ("https://groupietrackers.herokuapp.com/api/dates")
 	    if err != nil {
 		return err
 	
 		}
 		
 	defer res.Body.Close()
+	var response DateResponse
 	decoder := json.NewDecoder(res.Body)
 
-	var dates []Date
-	err = decoder.Decode(&dates)
+	//var dates []Date
+	err = decoder.Decode(&response)
 	if err != nil {
 		return err
-
-   }
-   return  nil
+	}
+     dates = response.Index
+    return  nil
+  
 }
 
 
@@ -181,6 +192,16 @@ func fetchAll() error {
 
 // for _, artist := range artists {
 // 	fmt.Println(artist.Name)
-	
+
 // }
-}
+
+// for _, location := range locations {
+//     fmt.Println("Artist ID:", location.ID)
+
+//     for _, place := range locations {
+//         fmt.Println(place)
+//     }
+
+//     fmt.Println()
+// }
+	}
